@@ -88,6 +88,12 @@ public class DateUtils {
         return fmt.print(dt);
     }
 
+    public static String getShortPatternDate(long timeMillis) {
+        Date date = new Date(timeMillis);
+        DateFormat dateFormat = SimpleDateFormat.getDateInstance(SimpleDateFormat.SHORT, Locale.getDefault());
+        return dateFormat.format(date);
+    }
+
     public static String getFullPatternDate(long timeMillis) {
 //        DateTime dt = new DateTime(timeMillis);
 //        DateTimeFormatter fmt = DateTimeFormat.forPattern(DateTimeFormat.patternForStyle("LL", Locale.getDefault()));

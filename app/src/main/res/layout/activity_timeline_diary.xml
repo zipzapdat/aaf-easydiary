@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
@@ -25,14 +26,22 @@
 
         </android.support.design.widget.AppBarLayout>
 
-        <ListView
+        <com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView
+            android:id="@+id/timelineList"
             android:padding="@dimen/card_layout_padding"
             android:dividerHeight="0dp"
             android:divider="@null"
-            android:id="@+id/timelineList"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        </ListView>
+            android:layout_height="match_parent"
+            app:fastScrollAutoHide="true"
+            app:fastScrollAutoHideDelay="1500"
+            app:fastScrollPopupBackgroundSize="88dp"
+            app:fastScrollPopupBgColor="@color/colorAccent"
+            app:fastScrollPopupPosition="adjacent"
+            app:fastScrollPopupTextColor="@android:color/primary_text_dark"
+            app:fastScrollPopupTextSize="56sp"
+            app:fastScrollThumbColor="@color/colorAccent"
+            tools:listitem="@layout/item"/>
 
     </LinearLayout>
 

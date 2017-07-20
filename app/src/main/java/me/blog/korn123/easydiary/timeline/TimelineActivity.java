@@ -3,11 +3,14 @@ package me.blog.korn123.easydiary.timeline;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
+import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
 import java.util.Collections;
 import java.util.List;
@@ -32,11 +35,11 @@ import me.blog.korn123.easydiary.setting.SettingsActivity;
 
 public class TimelineActivity extends EasyDiaryActivity {
 
-    private TimelineArrayAdapter mTimelineArrayAdapter;
+    private TimelineRecyclerViewAdapter mTimelineRecyclerViewAdapter;
     private List<DiaryDto> mDiaryList;
 
     @BindView(R.id.timelineList)
-    ListView mTimelineListView;
+    FastScrollRecyclerView mFastScrollRecyclerView;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,25 +54,29 @@ public class TimelineActivity extends EasyDiaryActivity {
 
         mDiaryList = DiaryDao.readDiary(null);
         Collections.reverse(mDiaryList);
-        mTimelineArrayAdapter = new TimelineArrayAdapter(this, R.layout.list_item_diary_time_line_array_adapter, mDiaryList);
-        mTimelineListView.setAdapter(mTimelineArrayAdapter);
-        mTimelineListView.setSelection(mDiaryList.size() - 1);
-
-        mTimelineListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                DiaryDto diaryDto = (DiaryDto)adapterView.getAdapter().getItem(i);
-                Intent detailIntent = new Intent(TimelineActivity.this, ReadDiaryDetailActivity.class);
-                detailIntent.putExtra("sequence", diaryDto.getSequence());
-                startActivity(detailIntent);
-            }
-        });
+        mFastScrollRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mTimelineRecyclerViewAdapter = new TimelineRecyclerViewAdapter(this, R.layout.list_item_diary_time_line_array_adapter, mDiaryList);
+        mFastScrollRecyclerView.setAdapter(mTimelineRecyclerViewAdapter);
+        mFastScrollRecyclerView.scrollToPosition(mDiaryList.size() - 1);
+//        mTimelineArrayAdapter = new TimelineArrayAdapter(this, R.layout.list_item_diary_time_line_array_adapter, mDiaryList);
+//        mTimelineListView.setAdapter(mTimelineArrayAdapter);
+//        mTimelineListView.setSelection(mDiaryList.size() - 1);
+//
+//        mTimelineListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                DiaryDto diaryDto = (DiaryDto)adapterView.getAdapter().getItem(i);
+//                Intent detailIntent = new Intent(TimelineActivity.this, ReadDiaryDetailActivity.class);
+//                detailIntent.putExtra("sequence", diaryDto.getSequence());
+//                startActivity(detailIntent);
+//            }
+//        });
     }
 
     public void refreshList() {
         mDiaryList.clear();
         mDiaryList.addAll(DiaryDao.readDiary(null));
         Collections.reverse(mDiaryList);
-        mTimelineArrayAdapter.notifyDataSetChanged();
+        mTimelineRecyclerViewAdapter.notifyDataSetChanged();
     }
 
     @Override
