@@ -44,7 +44,7 @@ public class FontUtils {
             mTypeface = Typeface.DEFAULT;
         } else {
             try {
-                String[] fonts = context.getAssets().list("fonts/");
+                String[] fonts = context.getAssets().list("fonts");
                 boolean isEmbeddedFont = false;
                 for (String font : fonts) {
                     if (StringUtils.equals(font, currentFont)) {
