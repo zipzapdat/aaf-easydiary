@@ -4,11 +4,16 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.icu.text.DisplayContext;
+import android.os.Environment;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
 import org.apache.commons.lang3.StringUtils;
+
+import java.io.IOException;
+
+import me.blog.korn123.commons.constants.Path;
 
 /**
  * Created by CHO HANJOONG on 2017-03-16.
@@ -38,7 +43,23 @@ public class FontUtils {
         if (StringUtils.equals(currentFont, "Default")) {
             mTypeface = Typeface.DEFAULT;
         } else {
-            mTypeface = Typeface.createFromAsset(assetManager, "fonts/" + currentFont);
+            try {
+                String[] fonts = context.getAssets().list("fonts/");
+                boolean isEmbeddedFont = false;
+                for (String font : fonts) {
+                    if (StringUtils.equals(font, currentFont)) {
+                        isEmbeddedFont = true;
+                        break;
+                    }
+                }
+                if (isEmbeddedFont) {
+                    mTypeface = Typeface.createFromAsset(assetManager, "fonts/" + currentFont);
+                } else {
+                    mTypeface = Typeface.createFromFile(Environment.getExternalStorageDirectory().getAbsolutePath() + Path.USER_CUSTOM_FONTS_DIRECTORY + currentFont);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return mTypeface;
     }

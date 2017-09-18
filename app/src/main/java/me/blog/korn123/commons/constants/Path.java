@@ -9,4 +9,5 @@ import android.os.Environment;
 public class Path {
     final static public String WORKING_DIRECTORY = "/AAFactory/EasyDiary/";
     final static public String DIARY_DB_NAME = "diary.realm";
+    final static public String USER_CUSTOM_FONTS_DIRECTORY = "/AAFactory/EasyDiary/Fonts/";
 }
