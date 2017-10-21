@@ -76,4 +76,7 @@ dependencies {
     // Alex Curran
     compile 'com.github.amlcurran.showcaseview:library:5.4.3'
 
+    // ZipZap SDK for App Backup/Restore
+    compile project(':zipzapsdk')
+
 }
